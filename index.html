@@ -1280,7 +1280,54 @@ function closeModal(id) {
 function submitLead() {
   const prenom = document.getElementById('lead-prenom').value.trim();
   const email = document.getElementById('lead-email').value.trim();
+  const tel = document.getElementById('lead-tel').value.trim();
+  const indicatif = document.querySelector('#modal-lead .inline-group select').value;
+  const roleBtn = document.querySelector('#lead-role-section .toggle-btn.selected');
+  const role = roleBtn ? roleBtn.textContent.trim() : '';
+  const consent1 = document.getElementById('c1').checked;
+  const consent2 = document.getElementById('c2').checked;
+
   if (!prenom || !email) { alert('Merci de renseigner ton prénom et email.'); return; }
+
+  const s = calcScore();
+  const score = state.filiere === 'PASS' ? s.pass : s.las;
+
+  const payload = {
+    prenom,
+    email,
+    telephone: indicatif.replace(/[^\d+]/g, '') + tel.replace(/\s/g, ''),
+    role,
+    fac: state.fac,
+    filiere: state.filiere,
+    classe: document.getElementById('sel-classe').value,
+    mention: state.mention,
+    specialite1: document.getElementById('sel-spe1').value,
+    note_spe1: document.getElementById('note-spe1').value,
+    specialite2: document.getElementById('sel-spe2').value,
+    note_spe2: document.getElementById('note-spe2').value,
+    heures_travail: state.heures,
+    pre_rentree: state.prerentree,
+    tutorat: state.tutorat,
+    accompagnement: state.accompagnement,
+    repetition_espacee: state.repetition,
+    score_estime: score ? score + '%' : '--',
+    places: s.places || '',
+    etudiants: s.etudiants || '',
+    bonus_methode: s.bonus || 0,
+    consent_cgu: consent1,
+    consent_communication: consent2,
+    date: new Date().toISOString(),
+    source: window.location.href
+  };
+
+  fetch('https://n8n.srv1068144.hstgr.cloud/webhook/3bd26905-e051-417c-a207-f1ee65a3eec4', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(function(err) {
+    console.error('Webhook error:', err);
+  });
+
   closeModal('modal-lead');
   document.getElementById('modal-accompagnement').classList.add('show');
 }
