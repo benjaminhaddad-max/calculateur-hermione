@@ -734,7 +734,7 @@
           <div id="insights-list"></div>
         </div>
         <div id="reco-block"></div>
-        <button class="btn-cta" onclick="window.open('https://hermione.co','_blank')">Découvrir la méthode Hermione →</button>
+        <div id="cta-block"></div>
       </div>
     </div>
 
@@ -1005,7 +1005,7 @@ function showResults(){
   document.getElementById('res-etudiants').textContent=s.etudiants.toLocaleString('fr');
   document.getElementById('res-taux-base').textContent=s.baseRate+'%';
 
-  let verdict='',sub='',tips=[], recoHtml='';
+  let verdict='',sub='',tips=[], recoHtml='', ctaHtml='';
   const explainScore='Ton profil ('+profile+') à <strong>'+state.fac+'</strong> en <strong>'+state.filiere+'</strong> te situe dans une fourchette de <strong>'+s.tutorat+'%</strong> (seul) à <strong>'+s.prepa+'%</strong> (accompagné). Le taux brut d\'admission est de '+s.baseRate+'% — chaque point de méthode et d\'encadrement compte.';
 
   if(zone==='idf' && budget==='eleve'){
@@ -1013,7 +1013,8 @@ function showResults(){
     bp.textContent='Diploma Santé';bt.textContent=ci.tutorat;
     verdict='On te recommande <em>Diploma Santé + '+ci.tutorat+'</em>';
     sub=explainScore+'<br/><br/>D\'après notre enquête menée auprès de <strong>5 000+ étudiants</strong> coachés par Hermione à travers les années, <strong>Diploma Santé</strong> est la prépa qui ressort le plus souvent comme le meilleur choix en Île-de-France :<br/>• <strong>78% d\'admis en médecine</strong> (vs 29,6% en moyenne nationale) — les résultats les mieux documentés du marché<br/>• <strong>278h</strong> de cours + entraînements (204h de cours + 74h d\'entraînements), vs ~233h annoncées chez Médisup (dont seulement ~60h avec de vrais professeurs)<br/>• <strong>8 concours blancs/an</strong> (le plus du marché) vs 4 chez Médisup et ~6 chez Antémed<br/>• <strong>2 pré-rentrées</strong> (S1 et S2 couvrant 50-60% du programme) vs 1 seule chez les concurrents<br/>• <strong>Classes de 25-30 étudiants max</strong> vs 50-60 chez Médisup<br/>• <strong>Oraux inclus</strong> (3 oraux blancs, préparation 4-5 semaines avant) vs 1 500€ en supplément chez Médisup<br/>• Coaching certifié Hermione chaque semaine<br/>• À partir de <strong>7 990€</strong> vs 8 900€ chez Médisup et 8 400€ chez Antémed';
-    recoHtml='<div class="insight boost"><div class="insight-icon">⭐</div><div class="insight-body"><h4>Notre recommandation : Diploma Santé</h4><p>Fondée par un ancien major, exclusivement des profs agrégés/universitaires/docteurs (aucun vacataire ni étudiant). Coaching hebdomadaire certifié Hermione, campus ouverts 7j/7 de 7h à minuit (Paris 12e et 16e). 87% d\'admis en maïeutique, 91% en pharmacie, 90% en kiné. <a href="https://www.diploma-sante.fr" target="_blank" style="color:var(--gold);font-weight:600">→ Voir Diploma Santé</a></p></div></div>';
+    recoHtml='<div class="insight boost"><div class="insight-icon">⭐</div><div class="insight-body"><h4>Notre recommandation : Diploma Santé</h4><p>Fondée par un ancien major, exclusivement des profs agrégés/universitaires/docteurs (aucun vacataire ni étudiant). Coaching hebdomadaire certifié Hermione, campus ouverts 7j/7 de 7h à minuit (Paris 12e et 16e). 87% d\'admis en maïeutique, 91% en pharmacie, 90% en kiné.</p></div></div>';
+    ctaHtml='<button class="btn-cta" onclick="window.open(\'https://diploma-sante.fr\',\'_blank\')">Découvrir Diploma Santé →</button>';
     tips.push({type:'info',icon:'📊',title:'Pourquoi ces '+s.prepa+'% ?',text:'Ton budget te permet un encadrement intensif. Avec ton profil ('+profile+'), le cadre de Diploma Santé (classes à 25-30, coaching hebdo, 8 concours blancs/an) optimise chaque heure de travail.'});
     tips.push({type:'boost',icon:'💡',title:'Combine avec le tutorat',text:'Le '+ci.tutorat+' est gratuit et t\'apporte deux atouts majeurs : des concours blancs à l\'échelle de toute la promo pour te situer dans le classement réel, et une base de QCM supplémentaire. Diploma Santé + tutorat = la combinaison optimale.'});
     tips.push({type:'info',icon:'⚠️',title:'Attention aux chiffres des concurrents',text:'D\'après notre enquête sur 5 000+ étudiants : Médisup annonce 233h mais les vrais cours avec professeurs représentent ~60h/semestre. Antémed est performant à Paris-Cité mais moins expérimenté sur les autres facs IDF. Diploma Santé offre le corps professoral le plus complet.'});
@@ -1023,7 +1024,8 @@ function showResults(){
     bp.textContent='Medibox';bt.textContent=ci.tutorat;
     verdict='On te recommande <em>Medibox + '+ci.tutorat+'</em>';
     sub=explainScore+'<br/><br/>Avec ton budget, <strong>Medibox</strong> (medibox.fr) est la solution la plus pertinente : une offre complète accessible à <strong>moitié prix des prépas présentielles</strong>, avec encore plus de qualité selon les retours étudiants. Combine-la avec le <strong>'+ci.tutorat+'</strong> (gratuit) qui organise des concours blancs sur toute la faculté et te donne une base de QCM supplémentaire.';
-    recoHtml='<div class="insight boost"><div class="insight-icon">🚀</div><div class="insight-body"><h4>Notre recommandation : Medibox</h4><p>Offre complète à moitié prix des prépas classiques ('+ci.prix+'). Cours vidéo, QCM illimités, concours blancs, planning personnalisé — les étudiants qui en sortent la recommandent largement. <a href="https://medibox.fr" target="_blank" style="color:var(--gold);font-weight:600">→ Voir Medibox</a></p></div></div>';
+    recoHtml='<div class="insight boost"><div class="insight-icon">🚀</div><div class="insight-body"><h4>Notre recommandation : Medibox</h4><p>Offre complète à moitié prix des prépas classiques ('+ci.prix+'). Cours vidéo, QCM illimités, concours blancs, planning personnalisé — les étudiants qui en sortent la recommandent largement.</p></div></div>';
+    ctaHtml='<button class="btn-cta" onclick="window.open(\'https://medibox.fr\',\'_blank\')">Découvrir Medibox →</button>';
     tips.push({type:'info',icon:'📊',title:'Pourquoi ces '+s.tutorat+'% ?',text:'Le taux brut à '+state.fac+' est de '+s.baseRate+'%. Medibox structure ton travail au quotidien (cours, QCM, concours blancs) pour une fraction du prix des prépas parisiennes à '+ci.prix+'.'});
     tips.push({type:'boost',icon:'💡',title:'Le '+ci.tutorat+' en complément',text:'Le tutorat de ta fac est gratuit et t\'apporte deux choses essentielles : des concours blancs à l\'échelle de toute la promo (pour te situer) et une banque de QCM supplémentaire adaptée à tes profs. Medibox + tutorat = combo gagnant.'});
 
@@ -1032,7 +1034,8 @@ function showResults(){
     bp.textContent='Medibox';bt.textContent=ci.tutorat;
     verdict='On te recommande <em>Medibox + '+ci.tutorat+'</em>';
     sub=explainScore+'<br/><br/>À '+state.fac+', <strong>Medibox</strong> est le choix le plus intelligent : une offre complète à <strong>moitié prix des prépas présentielles</strong> ('+ci.prix+'), avec encore plus de qualité selon les retours étudiants. Le <strong>'+ci.tutorat+'</strong> (gratuit) te donne en plus des concours blancs sur toute la promo et une base de QCM supplémentaire.';
-    recoHtml='<div class="insight boost"><div class="insight-icon">🚀</div><div class="insight-body"><h4>Notre recommandation : Medibox</h4><p>Offre complète à moitié prix des prépas locales ('+ci.prepas.slice(0,2).join(', ')+' coûtent '+ci.prix+'). Les étudiants la recommandent pour la qualité supérieure de ses contenus. <a href="https://medibox.fr" target="_blank" style="color:var(--gold);font-weight:600">→ Voir Medibox</a></p></div></div>';
+    recoHtml='<div class="insight boost"><div class="insight-icon">🚀</div><div class="insight-body"><h4>Notre recommandation : Medibox</h4><p>Offre complète à moitié prix des prépas locales ('+ci.prepas.slice(0,2).join(', ')+' coûtent '+ci.prix+'). Les étudiants la recommandent pour la qualité supérieure de ses contenus.</p></div></div>';
+    ctaHtml='<button class="btn-cta" onclick="window.open(\'https://medibox.fr\',\'_blank\')">Découvrir Medibox →</button>';
     tips.push({type:'info',icon:'📊',title:'Pourquoi ces résultats ?',text:'Le taux brut à '+state.fac+' est de '+s.baseRate+'%. Ton profil ('+profile+') peut atteindre '+s.prepa+'% avec un accompagnement structuré. Medibox te donne cet encadrement au quotidien, sans le coût d\'une prépa présentielle.'});
     tips.push({type:'boost',icon:'💡',title:'Le '+ci.tutorat+' en complément',text:'Gratuit et incontournable : le tutorat organise des concours blancs sur toute la faculté (le meilleur moyen de te situer dans le classement réel) et te donne accès à une banque de QCM supplémentaire. Medibox + tutorat = le meilleur ratio qualité/prix.'});
 
@@ -1041,7 +1044,8 @@ function showResults(){
     bp.textContent='Hermione';bt.textContent=ci.tutorat;
     verdict='On te recommande <em>Hermione + '+ci.tutorat+'</em>';
     sub=explainScore+'<br/><br/>À '+state.fac+', la stratégie optimale est de combiner le <strong>coaching Hermione Médecine</strong> (dès 80€/mois) avec le <strong>'+ci.tutorat+'</strong> (gratuit). Tu bénéficies d\'un accompagnement personnalisé par d\'anciens majors, et le tutorat t\'apporte des concours blancs à l\'échelle de toute la promo + une base de QCM supplémentaire — le tout sans le coût d\'une prépa à '+ci.prix+'.';
-    recoHtml='<div class="insight boost"><div class="insight-icon">🎓</div><div class="insight-body"><h4>Notre recommandation : Hermione + Tutorat</h4><p>Coaching personnalisé par d\'anciens majors (méthodologie, organisation, mental), combiné au '+ci.tutorat+' pour les concours blancs facultaires et les QCM supplémentaires. 71% de taux de réussite Hermione en 2024. <a href="https://hermione.co" target="_blank" style="color:var(--gold);font-weight:600">→ Découvrir Hermione</a></p></div></div>';
+    recoHtml='<div class="insight boost"><div class="insight-icon">🎓</div><div class="insight-body"><h4>Notre recommandation : Hermione + Tutorat</h4><p>Coaching personnalisé par d\'anciens majors (méthodologie, organisation, mental), combiné au '+ci.tutorat+' pour les concours blancs facultaires et les QCM supplémentaires. 71% de taux de réussite Hermione en 2024.</p></div></div>';
+    ctaHtml='<button class="btn-cta" onclick="window.open(\'https://hermione.co\',\'_blank\')">Découvrir Hermione Médecine →</button>';
     tips.push({type:'info',icon:'📊',title:'Comment lire tes '+s.tutorat+'% — '+s.prepa+'% ?',text:'À '+state.fac+', le taux brut est '+s.baseRate+'%. Ton profil ('+profile+') peut aller jusqu\'à '+s.prepa+'% avec le bon accompagnement. Le coaching Hermione agit sur ta méthode, ton organisation et ton mental — les 3 leviers qui font la différence.'});
     tips.push({type:'boost',icon:'💡',title:'Pourquoi pas une prépa classique ?',text:'Les prépas à '+state.fac+' ('+ci.prepas.slice(0,2).join(', ')+') coûtent '+ci.prix+'. Hermione + '+ci.tutorat+' (concours blancs facultaires + QCM supplémentaires) te donne un encadrement structuré pour une fraction du prix.'});
   }
@@ -1053,6 +1057,7 @@ function showResults(){
   document.getElementById('res-verdict').innerHTML=verdict;
   document.getElementById('res-sub').innerHTML=sub;
   document.getElementById('reco-block').innerHTML=recoHtml;
+  document.getElementById('cta-block').innerHTML=ctaHtml||'';
   document.getElementById('insights-list').innerHTML=tips.map(t=>'<div class="insight '+t.type+'"><div class="insight-icon">'+t.icon+'</div><div class="insight-body"><h4>'+t.title+'</h4><p>'+t.text+'</p></div></div>').join('');
   goStep(4);
 }
