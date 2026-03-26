@@ -638,15 +638,15 @@
       <div class="field">
         <label class="field-label">Spécialité 1</label>
         <div class="inline-fields">
-          <select id="sel-spe1"><option value="">Choisis...</option><option>SVT</option><option>Mathématiques</option><option>Physique-Chimie</option><option>NSI</option><option>HGGSP</option><option>SES</option><option>Philosophie</option><option>Autre</option></select>
-          <input type="number" id="note-spe1" placeholder="/20" min="0" max="20"/>
+          <select id="sel-spe1" onchange="syncSpeOptions()"><option value="">Choisis...</option><option>SVT</option><option>Mathématiques</option><option>Physique-Chimie</option><option>NSI</option><option>HGGSP</option><option>SES</option><option>Philosophie</option><option>Autre</option></select>
+          <input type="number" id="note-spe1" placeholder="/20" min="0" max="20" oninput="clampNote(this)"/>
         </div>
       </div>
       <div class="field">
         <label class="field-label">Spécialité 2</label>
         <div class="inline-fields">
-          <select id="sel-spe2"><option value="">Choisis...</option><option>SVT</option><option>Mathématiques</option><option>Physique-Chimie</option><option>NSI</option><option>HGGSP</option><option>SES</option><option>Philosophie</option><option>Autre</option></select>
-          <input type="number" id="note-spe2" placeholder="/20" min="0" max="20"/>
+          <select id="sel-spe2" onchange="syncSpeOptions()"><option value="">Choisis...</option><option>SVT</option><option>Mathématiques</option><option>Physique-Chimie</option><option>NSI</option><option>HGGSP</option><option>SES</option><option>Philosophie</option><option>Autre</option></select>
+          <input type="number" id="note-spe2" placeholder="/20" min="0" max="20" oninput="clampNote(this)"/>
         </div>
       </div>
       <button class="btn-next" onclick="goStep(3)">Étape suivante →</button>
@@ -865,6 +865,30 @@ function pickFiliere(f,btn){state.filiere=f;btn.closest('.choices').querySelecto
 function pickVal(k,v,btn){state[k]=v;btn.closest('.choices').querySelectorAll('.choice').forEach(c=>c.classList.remove('selected'));btn.classList.add('selected');}
 function pickToggle(k,v,btn){state[k]=v;btn.closest('.toggle-row').querySelectorAll('.toggle-pill').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 function pickRole(btn){btn.closest('.toggle-row').querySelectorAll('.toggle-pill').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
+
+function clampNote(input){
+  let v=parseFloat(input.value);
+  if(v>20)input.value=20;
+  if(v<0)input.value=0;
+}
+
+function syncSpeOptions(){
+  const s1=document.getElementById('sel-spe1');
+  const s2=document.getElementById('sel-spe2');
+  const v1=s1.value,v2=s2.value;
+  const allOpts=['SVT','Mathématiques','Physique-Chimie','NSI','HGGSP','SES','Philosophie','Autre'];
+  [s1,s2].forEach((sel,idx)=>{
+    const other=idx===0?v2:v1;
+    const current=sel.value;
+    const opts='<option value="">Choisis...</option>'+allOpts.map(o=>{
+      const disabled=(o===other && o!=='')?'disabled':'';
+      const selected=(o===current)?'selected':'';
+      const style=disabled?'style="color:var(--gray);opacity:0.4"':'';
+      return '<option value="'+o+'" '+disabled+' '+selected+' '+style+'>'+o+'</option>';
+    }).join('');
+    sel.innerHTML=opts;
+  });
+}
 
 function profileSummary(){
   const m={'aucune':'sans mention','AB':'mention AB','B':'mention Bien','TB':'mention TB','TBF':'mention TB Félicitations'};
